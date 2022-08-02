@@ -54,6 +54,10 @@ class _LoginMobileState extends State<LoginMobile> {
                     ),
                   ),
                   const SizedBox(height: 25),
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text('Forgot password'),
+                  ),
                   const SizedBox(height: 30),
                   TextButton(
                     style: TextButton.styleFrom(
