@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import '../components/homePage.dart';
+import 'package:users/components/signUpDevices/signUpDesktop.dart';
+import 'package:users/components/signUpDevices/signUpTablet.dart';
+import './signUpDevices/signUpMobile.dart';
+
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -7,13 +10,16 @@ class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: ElevatedButton(
-          child: const Text('Go back.'),
-          onPressed: () {
-            Navigator.of(context).pushNamed('/home');
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          if (constraints.maxWidth < 600) {
+            return const SignUpMobile();
+          } else if (constraints.maxWidth > 600 && constraints.maxWidth < 900) {
+            return const SignUpTablet();
+          } else {
+            return const SignUpDesktop();
           }
-        )
+        },
       ),
     );
   }
