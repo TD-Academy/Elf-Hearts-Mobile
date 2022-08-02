@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'components/accountPage.dart';
 import 'components/homePage.dart';
+import 'components/signInPage.dart';
+import 'components/signUpPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +20,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         brightness: Brightness.dark
       ),
-      home: const HomePage(title: 'Flutter Demo Home Page'),
+      initialRoute: '/home',
+      routes: {
+        '/home': (context) => const HomePage(),
+        '/signIn':(context) => const SignInPage(),
+        '/signUp': (context) => const SignUpPage()
+      },
+      // home: const HomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
