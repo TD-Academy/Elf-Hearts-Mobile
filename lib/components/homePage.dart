@@ -19,8 +19,6 @@ class _HomePageState extends State<HomePage> {
     const AccountPage(),
     const TeamsPage(),
   ];
-
-
   
   void _onItemTapped(int index) {
     setState(() {
