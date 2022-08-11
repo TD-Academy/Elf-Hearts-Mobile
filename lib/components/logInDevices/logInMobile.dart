@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:users/state/loginState.dart';
+import '../../data/login.dart';
+
+// Not finished
+// Works with backend but not on app level
 
 class LoginMobile extends StatefulWidget {
   const LoginMobile({Key? key}) : super(key: key);
@@ -9,7 +15,8 @@ class LoginMobile extends StatefulWidget {
 }
 
 class _LoginMobileState extends State<LoginMobile> {
-  bool _isChecked = false;
+  UserLoginProvider loginProvider = UserLoginProvider();
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -44,7 +51,7 @@ class _LoginMobileState extends State<LoginMobile> {
                       icon: Icon(Icons.person),
                       labelText: 'Username',
                     ),
-                    
+                    controller: loginProvider.userNameController,
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
@@ -52,18 +59,26 @@ class _LoginMobileState extends State<LoginMobile> {
                       icon: Icon(Icons.lock),
                       labelText: 'Password',
                     ),
+                    controller: loginProvider.passwordController,
                   ),
                   const SizedBox(height: 25),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      loginProvider
+                          .updateName(loginProvider.userNameController.text);
+                      loginProvider.updatePassword(
+                          loginProvider.passwordController.text);
+                    },
                     child: const Text('Forgot password'),
                   ),
                   const SizedBox(height: 30),
                   TextButton(
                     style: TextButton.styleFrom(
-                      textStyle: const TextStyle(fontSize: 20)
-                    ),
-                    onPressed: () {  },
+                        textStyle: const TextStyle(fontSize: 20)),
+                    onPressed: () {
+                      signIn(loginProvider.userNameController.text,
+                          loginProvider.passwordController.text);
+                    },
                     child: const Text('Log In'),
                   ),
                   const SizedBox(height: 100),
@@ -72,7 +87,19 @@ class _LoginMobileState extends State<LoginMobile> {
                     onPressed: () {
                       Navigator.of(context).pushNamed('/home');
                     },
-                  )
+                  ),
+                  const SizedBox(height: 75),
+                  Consumer<UserLoginProvider>(
+                      builder: (context, provider, child) {
+                    return Column(
+                      children: [
+                        Text('Username: ${provider.userName}'),
+                        Text('Password: ${provider.password}')
+                      ],
+                    );
+                  })
+                  // Text('Username: ${loginProvider.userName}'),
+                  // Text('Password: ${loginProvider.password}')
                 ],
               ),
             ),

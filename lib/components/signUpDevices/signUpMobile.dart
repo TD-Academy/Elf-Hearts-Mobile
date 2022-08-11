@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:users/models/signUpModel.dart';
+import 'package:provider/provider.dart';
+import 'package:users/state/signUpState.dart';
 
 class SignUpMobile extends StatefulWidget {
   const SignUpMobile({Key? key}) : super(key: key);
@@ -9,6 +12,40 @@ class SignUpMobile extends StatefulWidget {
 }
 
 class _SignUpMobileState extends State<SignUpMobile> {
+  // Controllers for getting input data
+  var firstNameController = TextEditingController();
+  var lastNameController = TextEditingController();
+  var userNameController = TextEditingController();
+  var emailController = TextEditingController();
+  var phoneNumberController = TextEditingController();
+  var passwordController = TextEditingController();
+
+  // registration function
+  // Minii oilgosnoor Future async eer hiideg
+  // 3 stage tei: uncompleted, value, error
+  // sudlah heregtei
+  // Test hiij arai uzeegu bga
+  Future<void> _registration() async {
+    String firstName = firstNameController.text.trim();
+    String lastName = lastNameController.text.trim();
+    String userName = userNameController.text.trim();
+    String email = emailController.text.trim();
+    String phoneNumber = phoneNumberController.text.trim();
+    String password = passwordController.text.trim();
+    SignUpBody signUpBody = SignUpBody(
+        firstName: firstName,
+        lastName: lastName,
+        userName: userName,
+        phoneNumber: phoneNumber,
+        email: email,
+        password: password);
+    var provider = Provider.of<DataClass>(context, listen: false);
+    await provider.postData(signUpBody);
+    if (provider.isBack) {
+      Navigator.of(context).pushNamed('/home');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -35,7 +72,7 @@ class _SignUpMobileState extends State<SignUpMobile> {
                       icon: Icon(Icons.person),
                       labelText: 'Firstname',
                     ),
-                    
+                    controller: firstNameController,
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
@@ -43,7 +80,7 @@ class _SignUpMobileState extends State<SignUpMobile> {
                       icon: Icon(Icons.person),
                       labelText: 'Lastname',
                     ),
-                    
+                    controller: lastNameController,
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
@@ -51,6 +88,7 @@ class _SignUpMobileState extends State<SignUpMobile> {
                       icon: Icon(Icons.person),
                       labelText: 'Username',
                     ),
+                    controller: userNameController,
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
@@ -58,6 +96,7 @@ class _SignUpMobileState extends State<SignUpMobile> {
                       icon: Icon(Icons.email),
                       labelText: 'Email',
                     ),
+                    controller: emailController,
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
@@ -65,6 +104,7 @@ class _SignUpMobileState extends State<SignUpMobile> {
                       icon: Icon(Icons.phone),
                       labelText: 'Phone number',
                     ),
+                    controller: phoneNumberController,
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
@@ -72,14 +112,16 @@ class _SignUpMobileState extends State<SignUpMobile> {
                       icon: Icon(Icons.lock),
                       labelText: 'Password',
                     ),
+                    controller: passwordController,
                   ),
                   const SizedBox(height: 25),
                   const SizedBox(height: 30),
                   TextButton(
                     style: TextButton.styleFrom(
-                      textStyle: const TextStyle(fontSize: 20)
-                    ),
-                    onPressed: () {  },
+                        textStyle: const TextStyle(fontSize: 20)),
+                    onPressed: () {
+                      _registration();
+                    },
                     child: const Text('Sign Up'),
                   ),
                   const SizedBox(height: 60),
