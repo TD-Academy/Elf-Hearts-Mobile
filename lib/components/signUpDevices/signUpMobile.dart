@@ -26,19 +26,19 @@ class _SignUpMobileState extends State<SignUpMobile> {
   // sudlah heregtei
   // Test hiij arai uzeegu bga
   Future<void> _registration() async {
+    String userName = userNameController.text.trim();
+    String password = passwordController.text.trim();
     String firstName = firstNameController.text.trim();
     String lastName = lastNameController.text.trim();
-    String userName = userNameController.text.trim();
     String email = emailController.text.trim();
     String phoneNumber = phoneNumberController.text.trim();
-    String password = passwordController.text.trim();
     SignUpBody signUpBody = SignUpBody(
+        userName: userName,
+        password: password,
         firstName: firstName,
         lastName: lastName,
-        userName: userName,
-        phoneNumber: phoneNumber,
         email: email,
-        password: password);
+        phone: phoneNumber);
     var provider = Provider.of<DataClass>(context, listen: false);
     await provider.postData(signUpBody);
     if (provider.isBack) {
@@ -128,7 +128,7 @@ class _SignUpMobileState extends State<SignUpMobile> {
                   ElevatedButton(
                     child: const Text('Go Back'),
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/home');
+                      Navigator.of(context).pushNamed('/start');
                     },
                   )
                 ],

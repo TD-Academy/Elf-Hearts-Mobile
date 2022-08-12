@@ -2,28 +2,29 @@
 // Nest deer avj uzhiin bol model gesen ug
 
 class SignUpBody {
+  String userName;
+  String password;
   String firstName;
   String lastName;
-  String userName;
   String email;
-  String phoneNumber;
-  String password;
+  String phone;
   SignUpBody(
-      {required this.firstName,
+      {required this.userName,
+      required this.password,
+      required this.firstName,
       required this.lastName,
-      required this.userName,
       required this.email,
-      required this.phoneNumber,
-      required this.password});
+      required this.phone,
+      });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data["userName"] = userName;
+    data['password'] = password;
     data["firstName"] = firstName;
     data["lastName"] = lastName;
-    data["userName"] = userName;
     data['email'] = email;
-    data["phone"] = phoneNumber;
-    data['password'] = password;
+    data["phone"] = phone;
     return data;
   }
 }
