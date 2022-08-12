@@ -4,14 +4,14 @@ import 'package:users/models/signUpModel.dart';
 import 'package:provider/provider.dart';
 import 'package:users/state/signUpState.dart';
 
-class SignUpMobile extends StatefulWidget {
-  const SignUpMobile({Key? key}) : super(key: key);
+class SignUpTablet extends StatefulWidget {
+  const SignUpTablet({Key? key}) : super(key: key);
 
   @override
-  State<SignUpMobile> createState() => _SignUpMobileState();
+  State<SignUpTablet> createState() => _SignUpTabletState();
 }
 
-class _SignUpMobileState extends State<SignUpMobile> {
+class _SignUpTabletState extends State<SignUpTablet> {
   // Controllers for getting input data
   var firstNameController = TextEditingController();
   var lastNameController = TextEditingController();
@@ -39,7 +39,7 @@ class _SignUpMobileState extends State<SignUpMobile> {
         lastName: lastName,
         email: email,
         phone: phoneNumber);
-    var provider = Provider.of<DataClass>(context, listen: false);
+    var provider = Provider.of<SignUpClass>(context, listen: false);
     await provider.postData(signUpBody);
     if (provider.isBack) {
       Navigator.of(context).pushNamed('/home');

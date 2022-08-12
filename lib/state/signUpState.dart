@@ -6,7 +6,7 @@ import 'package:users/models/signUpModel.dart';
 // State Management for Sign Up
 // Test hiij uzeegu bga odoogoor
 
-class DataClass extends ChangeNotifier {
+class SignUpClass extends ChangeNotifier {
   bool loading = false;
   bool isBack = false;
   Future<void> postData(SignUpBody body) async {

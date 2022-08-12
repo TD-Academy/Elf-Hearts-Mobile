@@ -4,14 +4,14 @@ import 'package:users/models/signUpModel.dart';
 import 'package:provider/provider.dart';
 import 'package:users/state/signUpState.dart';
 
-class SignUpDesktop extends StatefulWidget {
-  const SignUpDesktop({Key? key}) : super(key: key);
+class SignUpMobile extends StatefulWidget {
+  const SignUpMobile({Key? key}) : super(key: key);
 
   @override
-  State<SignUpDesktop> createState() => _SignUpDesktopState();
+  State<SignUpMobile> createState() => _SignUpMobileState();
 }
 
-class _SignUpDesktopState extends State<SignUpDesktop> {
+class _SignUpMobileState extends State<SignUpMobile> {
   // Controllers for getting input data
   var firstNameController = TextEditingController();
   var lastNameController = TextEditingController();
@@ -39,7 +39,7 @@ class _SignUpDesktopState extends State<SignUpDesktop> {
         lastName: lastName,
         email: email,
         phone: phoneNumber);
-    var provider = Provider.of<DataClass>(context, listen: false);
+    var provider = Provider.of<SignUpClass>(context, listen: false);
     await provider.postData(signUpBody);
     if (provider.isBack) {
       Navigator.of(context).pushNamed('/home');
@@ -48,22 +48,17 @@ class _SignUpDesktopState extends State<SignUpDesktop> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const Padding(padding: EdgeInsets.fromLTRB(20, 0, 0, 0)),
-        Expanded( //<-- Expanded widget
-          child: Image.asset(
-             '../../../assets/img2.jpg', 
-             fit: BoxFit.cover,
-        )),
-        Expanded( //<-- Expanded widget
-          child: Container(
-            constraints: const BoxConstraints(maxWidth: 21),
-            padding: const EdgeInsets.symmetric(horizontal: 50),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
+    return Center(
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(30),
+          child: Center(
+            child: SizedBox(
+              width: 300,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
                   Text(
                     'Create your account',
                     style: GoogleFonts.inter(
@@ -137,10 +132,11 @@ class _SignUpDesktopState extends State<SignUpDesktop> {
                     },
                   )
                 ],
+              ),
             ),
           ),
         ),
-      ],
+      ),
     );
   }
 }

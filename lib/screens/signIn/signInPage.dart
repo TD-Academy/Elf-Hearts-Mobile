@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:users/state/loginState.dart';
-import './logInDevices/logInMobile.dart';
-import './logInDevices/logInTablet.dart';
-import './logInDevices/logInDesktop.dart';
+import 'components/signInMobile.dart';
+import 'components/signInTablet.dart';
+import 'components/signInDesktop.dart';
 
 class LogInPage extends StatelessWidget {
   const LogInPage({Key? key}) : super(key: key);
@@ -14,8 +12,7 @@ class LogInPage extends StatelessWidget {
       body: LayoutBuilder(
         builder: (context, constraints) {
           if (constraints.maxWidth < 600) {
-            return ChangeNotifierProvider<UserLoginProvider>(
-                create: (_) => UserLoginProvider(), child: const LoginMobile());
+            return const LoginMobile();
           } else if (constraints.maxWidth > 600 && constraints.maxWidth < 900) {
             return const LoginTablet();
           } else {
