@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+import 'package:users/models/signInModel.dart';
 import 'package:users/state/loginState.dart';
-import '../../data/login.dart';
+import 'package:provider/provider.dart';
+
 
 // Not finished
 // Works with backend but not on app level
@@ -15,7 +16,23 @@ class LoginMobile extends StatefulWidget {
 }
 
 class _LoginMobileState extends State<LoginMobile> {
-  UserLoginProvider loginProvider = UserLoginProvider();
+  var userNameController = TextEditingController();
+  var passwordController = TextEditingController();
+
+  Future<void> _signIn() async {
+    String userName = userNameController.text.trim();
+    String password = passwordController.text.trim();
+
+    SignInBody signInBody = SignInBody(
+        userName: userName,
+        password: password);
+
+    var provider = Provider.of<SignInClass>(context, listen: false);
+    await provider.postData(signInBody);
+    if (provider.isBack) {
+      Navigator.of(context).pushNamed('/home');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +68,7 @@ class _LoginMobileState extends State<LoginMobile> {
                       icon: Icon(Icons.person),
                       labelText: 'Username',
                     ),
-                    controller: loginProvider.userNameController,
+                    controller: userNameController,
                   ),
                   const SizedBox(height: 20),
                   TextFormField(
@@ -59,47 +76,27 @@ class _LoginMobileState extends State<LoginMobile> {
                       icon: Icon(Icons.lock),
                       labelText: 'Password',
                     ),
-                    controller: loginProvider.passwordController,
+                    controller: passwordController,
                   ),
                   const SizedBox(height: 25),
                   TextButton(
-                    onPressed: () {
-                      loginProvider
-                          .updateName(loginProvider.userNameController.text);
-                      loginProvider.updatePassword(
-                          loginProvider.passwordController.text);
-                    },
+                    onPressed: () {},
                     child: const Text('Forgot password'),
                   ),
                   const SizedBox(height: 30),
                   TextButton(
                     style: TextButton.styleFrom(
                         textStyle: const TextStyle(fontSize: 20)),
-                    onPressed: () {
-                      signIn(loginProvider.userNameController.text,
-                          loginProvider.passwordController.text);
-                    },
+                    onPressed: () {_signIn();},
                     child: const Text('Log In'),
                   ),
                   const SizedBox(height: 100),
                   ElevatedButton(
                     child: const Text('Go Back'),
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/home');
+                      Navigator.of(context).pushNamed('/start');
                     },
-                  ),
-                  const SizedBox(height: 75),
-                  Consumer<UserLoginProvider>(
-                      builder: (context, provider, child) {
-                    return Column(
-                      children: [
-                        Text('Username: ${provider.userName}'),
-                        Text('Password: ${provider.password}')
-                      ],
-                    );
-                  })
-                  // Text('Username: ${loginProvider.userName}'),
-                  // Text('Password: ${loginProvider.password}')
+                  )
                 ],
               ),
             ),

@@ -1,25 +1,19 @@
 import 'package:flutter/cupertino.dart';
-
-// Minii state management hiih gej uzsen oroldlogo
-// Not working
-
-class UserLoginProvider extends ChangeNotifier {
-  TextEditingController userNameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-
-  String _userName = '';
-  String _password = '';
-
-  String get userName => _userName;
-  String get password => _password;
-
-  void updateName(String name) {
-    _userName = name;
+import 'package:http/http.dart' as http;
+import 'package:users/models/signInModel.dart';
+import 'package:users/models/signUpModel.dart';
+import 'package:users/services/signInService.dart';
+class SignInClass extends ChangeNotifier {
+  bool loading = false;
+  bool isBack = false;
+  Future<void> postData(SignInBody body) async {
+    loading = true;
     notifyListeners();
-  }
-
-  void updatePassword(String pass) {
-    _password = pass;
+    http.Response response = (await signIn(body))!;
+    if (response.statusCode == 200) {
+      isBack = true;
+    }
+    loading = false;
     notifyListeners();
   }
 }

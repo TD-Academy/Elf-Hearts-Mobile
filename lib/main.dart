@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:users/components/startPage.dart';
+import 'package:users/screens/start/startPage.dart';
+import 'package:users/screens/otp/verificationPage.dart';
+import 'package:users/state/loginState.dart';
 import 'package:users/state/signUpState.dart';
-import 'components/homePage.dart';
-import 'components/logInPage.dart';
-import 'components/signUpPage.dart';
+import 'screens/home/homePage.dart';
+import 'screens/signIn/signInPage.dart';
+import 'screens/signUp/signUpPage.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   // For State Management
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (_) => DataClass()),
+    ChangeNotifierProvider(create: (_) => SignUpClass()),
+    ChangeNotifierProvider(create: (_) => SignInClass()),
   ], child: const MyApp()));
 }
 
@@ -28,7 +31,8 @@ class MyApp extends StatelessWidget {
         '/start': (context) => const StartPage(),
         '/home': (context) => const HomePage(),
         '/signIn': (context) => const LogInPage(),
-        '/signUp': (context) => const SignUpPage()
+        '/signUp': (context) => const SignUpPage(),
+        '/otp': (context) => const VerificationPage()
       },
     );
   }

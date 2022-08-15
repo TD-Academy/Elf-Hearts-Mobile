@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'accountPage.dart';
-import 'tasksPage.dart';
-import 'teamsPage.dart';
+import '../account/accountPage.dart';
+import '../tasks/tasksPage.dart';
+import '../teams/teamsPage.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

@@ -8,14 +8,6 @@ class AccountPage extends StatefulWidget {
 }
 
 class _AccountPageState extends State<AccountPage> {
-  int _counter = 0;
-
-  void addCount() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -44,11 +36,9 @@ class _AccountPageState extends State<AccountPage> {
         ),
         const Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
         IconButton(
-          onPressed: addCount,
+          onPressed: (){},
           icon: const Icon(Icons.add),
-        ),
-        const Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 0)),
-        Text(_counter.toString())
+        )
       ],
     );
   }
