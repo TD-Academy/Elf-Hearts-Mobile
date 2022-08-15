@@ -16,9 +16,7 @@ Future<http.Response?> register(SignUpBody data) async {
   try {
     response = await http.post(Uri.parse(apiEndpoint),
         body: jsonEncode(data.toJson()),
-        headers: {
-          'Content-type': 'application/json'
-        });
+        headers: {'Content-type': 'application/json'});
   } catch (e) {
     log(e.toString());
   }
