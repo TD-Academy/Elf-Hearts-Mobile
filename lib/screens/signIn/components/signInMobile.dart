@@ -4,10 +4,6 @@ import 'package:users/models/signInModel.dart';
 import 'package:users/state/loginState.dart';
 import 'package:provider/provider.dart';
 
-
-// Not finished
-// Works with backend but not on app level
-
 class LoginMobile extends StatefulWidget {
   const LoginMobile({Key? key}) : super(key: key);
 

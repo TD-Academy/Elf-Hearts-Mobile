@@ -1,25 +1,32 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter/material.dart';
 
-// Storage service initialize hiij bga ni gehdee yag yaj ashiglahiig ni sain oilgoogu
-
-FlutterSecureStorage secureStorage = const FlutterSecureStorage();
-
 class LocalStorageService {
-  final _storage = FlutterSecureStorage();
+  final _storage = const FlutterSecureStorage();
 
-  Future writeSecureData(String key, String value) async {
+  writeSecureData(String key, String value) async {
     var writeData = await _storage.write(key: key, value: value);
     return writeData;
   }
 
-  Future readSecureData(String key) async {
+  readSecureData(String key) async {
     var readData = await _storage.read(key: key);
     return readData;
   }
 
-  Future deleteSecureData(String key) async {
+  readAllSecureData() async {
+    Map<String, String> readAllData = await _storage.readAll();
+    return readAllData;
+  }
+
+  deleteSecureData(String key) async {
     var deleteData = await _storage.delete(key: key);
     return deleteData;
   }
+
+  deleteAllSecureData() async {
+    var deleteAllData = _storage.deleteAll;
+    return deleteAllData;
+  }
 }
+

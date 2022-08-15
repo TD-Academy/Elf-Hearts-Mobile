@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:users/screens/loading/loadingPage.dart';
 import 'package:users/screens/start/startPage.dart';
 import 'package:users/screens/otp/verificationPage.dart';
 import 'package:users/state/loginState.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(brightness: Brightness.dark),
       initialRoute: '/start',
       routes: {
+        '/loading':(context) => const LoadingPage(),
         '/start': (context) => const StartPage(),
         '/home': (context) => const HomePage(),
         '/signIn': (context) => const LogInPage(),
