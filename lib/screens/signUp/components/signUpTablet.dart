@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:users/models/signUpModel.dart';
+import 'package:users/models/authModels.dart';
 import 'package:provider/provider.dart';
-import 'package:users/state/signUpState.dart';
+import 'package:users/controllers/authController.dart';
 
 class SignUpTablet extends StatefulWidget {
   const SignUpTablet({Key? key}) : super(key: key);
@@ -39,8 +39,8 @@ class _SignUpTabletState extends State<SignUpTablet> {
         lastName: lastName,
         email: email,
         phone: phoneNumber);
-    var provider = Provider.of<SignUpClass>(context, listen: false);
-    await provider.postData(signUpBody);
+    var provider = Provider.of<AuthController>(context, listen: false);
+    await provider.createUser(signUpBody);
     if (provider.isBack) {
       Navigator.of(context).pushNamed('/home');
     }

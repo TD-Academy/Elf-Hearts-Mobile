@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:users/models/signInModel.dart';
-import 'package:users/state/loginState.dart';
+import 'package:users/models/authModels.dart';
+import 'package:users/controllers/authController.dart';
 import 'package:provider/provider.dart';
 
 class LoginMobile extends StatefulWidget {
@@ -19,12 +19,9 @@ class _LoginMobileState extends State<LoginMobile> {
     String userName = userNameController.text.trim();
     String password = passwordController.text.trim();
 
-    SignInBody signInBody = SignInBody(
-        userName: userName,
-        password: password);
-
-    var provider = Provider.of<SignInClass>(context, listen: false);
-    await provider.postData(signInBody);
+    SignInBody signInBody = SignInBody(userName: userName, password: password);
+    var provider = Provider.of<AuthController>(context, listen: false);
+    await provider.authUser(signInBody);
     if (provider.isBack) {
       Navigator.of(context).pushNamed('/home');
     }
@@ -83,7 +80,9 @@ class _LoginMobileState extends State<LoginMobile> {
                   TextButton(
                     style: TextButton.styleFrom(
                         textStyle: const TextStyle(fontSize: 20)),
-                    onPressed: () {_signIn();},
+                    onPressed: () {
+                      _signIn();
+                    },
                     child: const Text('Log In'),
                   ),
                   const SizedBox(height: 100),

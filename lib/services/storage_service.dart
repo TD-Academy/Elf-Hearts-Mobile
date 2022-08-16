@@ -1,16 +1,16 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:flutter/material.dart';
+
+enum StorageKey { userName, userId, accessToken, refreshToken }
 
 class LocalStorageService {
   final _storage = const FlutterSecureStorage();
 
-  writeSecureData(String key, String value) async {
-    var writeData = await _storage.write(key: key, value: value);
-    return writeData;
+  writeData(String key, String value) async {
+    await _storage.write(key: key.toString(), value: value);
   }
 
-  readSecureData(String key) async {
-    var readData = await _storage.read(key: key);
+  readSecureData(key) async {
+    var readData = await _storage.read(key: key.toString());
     return readData;
   }
 
@@ -20,13 +20,10 @@ class LocalStorageService {
   }
 
   deleteSecureData(String key) async {
-    var deleteData = await _storage.delete(key: key);
-    return deleteData;
+    await _storage.delete(key: key.toString());
   }
 
   deleteAllSecureData() async {
-    var deleteAllData = _storage.deleteAll;
-    return deleteAllData;
+    _storage.deleteAll;
   }
 }
-

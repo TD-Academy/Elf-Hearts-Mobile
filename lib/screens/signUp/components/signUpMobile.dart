@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:users/models/signUpModel.dart';
+import 'package:users/models/authModels.dart';
 import 'package:provider/provider.dart';
-import 'package:users/state/signUpState.dart';
+import 'package:users/controllers/authController.dart';
 
 class SignUpMobile extends StatefulWidget {
   const SignUpMobile({Key? key}) : super(key: key);
@@ -20,11 +20,6 @@ class _SignUpMobileState extends State<SignUpMobile> {
   var phoneNumberController = TextEditingController();
   var passwordController = TextEditingController();
 
-  // registration function
-  // Minii oilgosnoor Future async eer hiideg
-  // 3 stage tei: uncompleted, value, error
-  // sudlah heregtei
-  // Test hiij arai uzeegu bga
   Future<void> _registration() async {
     String userName = userNameController.text.trim();
     String password = passwordController.text.trim();
@@ -39,8 +34,8 @@ class _SignUpMobileState extends State<SignUpMobile> {
         lastName: lastName,
         email: email,
         phone: phoneNumber);
-    var provider = Provider.of<SignUpClass>(context, listen: false);
-    await provider.postData(signUpBody);
+    var provider = Provider.of<AuthController>(context, listen: false);
+    await provider.createUser(signUpBody);
     if (provider.isBack) {
       Navigator.of(context).pushNamed('/home');
     }

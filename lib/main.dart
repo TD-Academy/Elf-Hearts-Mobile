@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:users/screens/loading/loadingPage.dart';
 import 'package:users/screens/start/startPage.dart';
 import 'package:users/screens/otp/verificationPage.dart';
-import 'package:users/state/loginState.dart';
-import 'package:users/state/signUpState.dart';
+import 'package:users/controllers/authController.dart';
 import 'screens/home/homePage.dart';
 import 'screens/signIn/signInPage.dart';
 import 'screens/signUp/signUpPage.dart';
 import 'package:provider/provider.dart';
+import 'modules/initialPage.dart';
 
 void main() {
   // For State Management
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (_) => SignUpClass()),
-    ChangeNotifierProvider(create: (_) => SignInClass()),
+    ChangeNotifierProvider(create: (_) => AuthController()),
   ], child: const MyApp()));
 }
 
@@ -27,15 +26,15 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(brightness: Brightness.dark),
-      initialRoute: '/start',
       routes: {
-        '/loading':(context) => const LoadingPage(),
+        '/loading': (context) => const LoadingPage(),
         '/start': (context) => const StartPage(),
         '/home': (context) => const HomePage(),
         '/signIn': (context) => const LogInPage(),
         '/signUp': (context) => const SignUpPage(),
         '/otp': (context) => const VerificationPage()
       },
+      home: InitialPage(),
     );
   }
 }
