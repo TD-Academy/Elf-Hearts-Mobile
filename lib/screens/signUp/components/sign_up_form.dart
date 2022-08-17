@@ -5,8 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:users/controllers/auth_controller.dart';
 import 'package:users/models/user_model.dart';
 
-
-
 class SignUpForm extends StatefulWidget {
   const SignUpForm({Key? key}) : super(key: key);
 
@@ -107,8 +105,7 @@ class _SignUpFormState extends State<SignUpForm> {
         const SizedBox(height: 25),
         const SizedBox(height: 30),
         TextButton(
-          style: TextButton.styleFrom(
-              textStyle: const TextStyle(fontSize: 20)),
+          style: TextButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
           onPressed: () {
             _registration();
           },

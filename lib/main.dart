@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(brightness: Brightness.dark),
       routes: {
+        '/initial': (context) => const InitialPage(),
         '/loading': (context) => const LoadingPage(),
         '/start': (context) => const StartPage(),
         '/home': (context) => const HomePage(),
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
         '/signUp': (context) => const SignUpPage(),
         '/otp': (context) => const VerificationPage()
       },
-      home: InitialPage(),
+      initialRoute: '/initial',
     );
   }
 }

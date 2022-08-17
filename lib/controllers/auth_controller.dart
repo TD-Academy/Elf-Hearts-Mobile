@@ -5,22 +5,25 @@ import 'package:http/http.dart' as http;
 import 'package:users/models/user_model.dart';
 import 'package:users/services/auth_service.dart';
 import 'package:users/services/storage_service.dart';
-import 'package:users/models/response_model.dart';
+import 'package:users/models/responses/auth_responses.dart';
 import 'dart:async';
 
-enum AuthStatus { authorized, unauthorized }
+enum AuthStatus { authorized, unauthorized, loading }
 
 class AuthController extends ChangeNotifier {
   static const String signInEndpoint = "/signIn";
   static const String signUpEndpoint = "/signUp";
   final storage = LocalStorageService();
-  final user = Users();
   bool isBack = false;
-  late final AuthStatus status;
+  AuthStatus status = AuthStatus.loading;
 
+  AuthController() {
+    init();
+  }
 
-  // when start checktoken
-  // and tokeninterval
+  void init() async {
+    await checkToken();
+  }
 
   tokenInterval() {
     Timer.periodic(const Duration(minutes: 15), (timer) {
@@ -30,13 +33,16 @@ class AuthController extends ChangeNotifier {
 
   checkToken() async {
     try {
-      if(await storage.readData(StorageKey.accessToken) != null) {
+      if (await storage.readData(StorageKey.accessToken) != null) {
         status = AuthStatus.authorized;
         notifyListeners();
       } else {
-        logOut();
+        status = AuthStatus.unauthorized;
+        notifyListeners();
+        // logOut();
       }
-    } on Exception catch(e) {
+    } on Exception catch (e) {
+      print(e);
       logOut();
     }
   }
@@ -48,46 +54,44 @@ class AuthController extends ChangeNotifier {
     notifyListeners();
   }
 
-  signIn({
-    required String userName,
-    required String password
-  }) async {
+  Future<void> signIn(Users body) async {
     try {
-      final body = {userName: userName, password: password};
       http.Response response = (await postData(body, signInEndpoint))!;
       final responseBody = jsonDecode(response.body);
-      final accessToken = responseBody['access_token'];
-      final refreshToken = responseBody['refresh_token'];
+      AuthResponse authResponse = AuthResponse.fromJson(responseBody);
+      final accessToken = authResponse.accessToken;
+      final refreshToken = authResponse.refreshToken;
+      final userName = authResponse.userName;
       await storage.writeData(StorageKey.accessToken, accessToken);
       await storage.writeData(StorageKey.refreshToken, refreshToken);
+      await storage.writeData(StorageKey.userName, userName);
       if (response.statusCode == 201) {
         isBack = true;
+        status = AuthStatus.authorized;
+        notifyListeners();
       }
-      notifyListeners();
+
       await tokenInterval();
-    }
-    catch(e) {
+    } catch (e) {
       print(e);
       logOut();
     }
     notifyListeners();
   }
 
-  
-
   Future<void> signUp(Users body) async {
     try {
       http.Response response = (await postData(body, signUpEndpoint))!;
-      final responseBody = jsonDecode(response.body);
-      final id = responseBody['id'];
+      // final responseBody = jsonDecode(response.body);
+      // AuthResponse authResponse = AuthResponse.fromJson(responseBody);
+      // final id = authResponse.id;
       // await storage.writeData(StorageKey.userId, id);
       if (response.statusCode == 201) {
         isBack = true;
       }
       notifyListeners();
       // otp page connect and check
-    }
-    catch(e) {
+    } catch (e) {
       print(e);
     }
     notifyListeners();

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:users/controllers/auth_controller.dart';
 import 'package:users/services/storage_service.dart';
 import '../loading/loading_page.dart';
 
 LocalStorageService storageService = LocalStorageService();
-
 
 class AccountPage extends StatefulWidget {
   const AccountPage({Key? key}) : super(key: key);
@@ -21,10 +21,9 @@ class _AccountPageState extends State<AccountPage> {
   Future<void> _readFromStorage() async {
     userName = (await storageService.readData(StorageKey.userName)).toString();
     setState(() {
-      isLoading=false;
+      isLoading = false;
     });
   }
-
 
   @override
   void initState() {
@@ -96,11 +95,15 @@ class _AccountPageState extends State<AccountPage> {
                                         ),
                                         SizedBox(height: 25.0),
                                         Align(
-                                          child: Text('$userName',
-                                              style: TextStyle(
-                                                  color: Color.fromRGBO(
-                                                      50, 50, 93, 1),
-                                                  fontSize: 28.0)),
+                                          child: TextButton(
+                                            child: Text('$userName',
+                                                style: TextStyle(
+                                                    color: Color.fromRGBO(
+                                                        50, 50, 93, 1),
+                                                    fontSize: 28.0)),
+                                            onPressed:
+                                                AuthController().logOut(),
+                                          ),
                                         ),
                                         SizedBox(
                                           height: 25,
@@ -235,8 +238,9 @@ class _AccountPageState extends State<AccountPage> {
                 ),
               ),
             ]),
-          )
-        ]));
+          ),
+        ]),
+      );
     }
   }
 }

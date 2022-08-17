@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:users/controllers/auth_controller.dart';
 import 'package:provider/provider.dart';
+import 'package:users/models/user_model.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({Key? key}) : super(key: key);
@@ -11,18 +14,20 @@ class SignInForm extends StatefulWidget {
 }
 
 class _SignInFormState extends State<SignInForm> {
-  var userNameController = TextEditingController();
-  var passwordController = TextEditingController();
+  var userNameController = TextEditingController(text: 'Tergel');
+  var passwordController = TextEditingController(text: 'Tergel88');
 
   Future<void> _signIn() async {
     String userName = userNameController.text.trim();
     String password = passwordController.text.trim();
+    Users body = Users(userName: userName, password: password);
     var provider = Provider.of<AuthController>(context, listen: false);
-    await provider.signIn(userName: userName, password: password);
+    await provider.signIn(body);
     if (provider.isBack) {
       Navigator.of(context).pushNamed('/home');
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -67,8 +72,7 @@ class _SignInFormState extends State<SignInForm> {
         ),
         const SizedBox(height: 30),
         TextButton(
-          style: TextButton.styleFrom(
-              textStyle: const TextStyle(fontSize: 20)),
+          style: TextButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
           onPressed: () {
             _signIn();
           },
