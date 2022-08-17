@@ -3,27 +3,27 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 enum StorageKey { userName, userId, accessToken, refreshToken }
 
 class LocalStorageService {
-  final _storage = const FlutterSecureStorage();
+  final _storage = const FlutterSecureStorage(aOptions: AndroidOptions(encryptedSharedPreferences: true));
 
-  writeData(String key, String value) async {
-    await _storage.write(key: key.toString(), value: value);
+  writeData(StorageKey key, String? value) async {
+    await _storage.write(key: key.name, value: value);
   }
 
-  readSecureData(key) async {
-    var readData = await _storage.read(key: key.toString());
+  readData(StorageKey key) async {
+    var readData = await _storage.read(key: key.name);
     return readData;
   }
 
-  readAllSecureData() async {
+  readAllData() async {
     Map<String, String> readAllData = await _storage.readAll();
     return readAllData;
   }
 
-  deleteSecureData(String key) async {
-    await _storage.delete(key: key.toString());
+  deleteData(StorageKey key) async {
+    await _storage.delete(key: key.name);
   }
 
-  deleteAllSecureData() async {
+  deleteAllData() async {
     _storage.deleteAll;
   }
 }

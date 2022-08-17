@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:users/screens/loading/loadingPage.dart';
-import 'package:users/screens/start/startPage.dart';
-import 'package:users/screens/otp/verificationPage.dart';
-import 'package:users/controllers/authController.dart';
-import 'screens/home/homePage.dart';
-import 'screens/signIn/signInPage.dart';
-import 'screens/signUp/signUpPage.dart';
+import 'package:users/screens/loading/loading_page.dart';
+import 'package:users/screens/start/start_page.dart';
+import 'package:users/screens/otp/verification_page.dart';
+import 'package:users/controllers/auth_controller.dart';
+import 'screens/home/home_page.dart';
+import 'screens/signIn/sign_in_page.dart';
+import 'screens/signUp/sign_up_page.dart';
 import 'package:provider/provider.dart';
-import 'modules/initialPage.dart';
+import 'screens/initial/initial_page.dart';
 
 void main() {
   // For State Management

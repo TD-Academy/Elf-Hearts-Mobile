@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:users/services/storage_service.dart';
-import '../loading/loadingPage.dart';
+import '../loading/loading_page.dart';
 
 LocalStorageService storageService = LocalStorageService();
 
@@ -19,7 +19,7 @@ class _AccountPageState extends State<AccountPage> {
   bool isLoading = true;
 
   Future<void> _readFromStorage() async {
-    userName = (await storageService.readSecureData('KEY_USERNAME')).toString();
+    userName = (await storageService.readData(StorageKey.userName)).toString();
     setState(() {
       isLoading=false;
     });

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:users/screens/signUp/components/signUpDesktop.dart';
-import 'package:users/screens/signUp/components/signUpTablet.dart';
-import 'components/signUpMobile.dart';
+import 'package:users/screens/signUp/components/sign_up_desktop.dart';
+import 'package:users/screens/signUp/components/sign_up_tablet.dart';
+import 'components/sign_up_mobile.dart';
 
 
 class SignUpPage extends StatelessWidget {

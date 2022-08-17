@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'components/signInMobile.dart';
-import 'components/signInTablet.dart';
-import 'components/signInDesktop.dart';
+import 'components/sign_in_modile.dart';
+import 'components/sign_in_tablet.dart';
+import 'components/signIn_desktop.dart';
 
 class LogInPage extends StatelessWidget {
   const LogInPage({Key? key}) : super(key: key);

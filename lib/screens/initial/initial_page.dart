@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:users/controllers/authController.dart';
+import 'package:users/controllers/auth_controller.dart';
 
 class InitialPage extends StatefulWidget {
   InitialPage({Key? key}) : super(key: key);
