@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:users/controllers/auth_controller.dart';
 import 'package:users/services/storage_service.dart';
 import '../loading/loading_page.dart';
 
@@ -20,6 +19,7 @@ class _AccountPageState extends State<AccountPage> {
 
   Future<void> _readFromStorage() async {
     userName = (await storageService.readData(StorageKey.userName)).toString();
+    print(userName);
     setState(() {
       isLoading = false;
     });
@@ -95,15 +95,11 @@ class _AccountPageState extends State<AccountPage> {
                                         ),
                                         SizedBox(height: 25.0),
                                         Align(
-                                          child: TextButton(
-                                            child: Text('$userName',
-                                                style: TextStyle(
-                                                    color: Color.fromRGBO(
-                                                        50, 50, 93, 1),
-                                                    fontSize: 28.0)),
-                                            onPressed:
-                                                AuthController().logOut(),
-                                          ),
+                                          child: Text('$userName',
+                                              style: TextStyle(
+                                                  color: Color.fromRGBO(
+                                                      50, 50, 93, 1),
+                                                  fontSize: 28.0)),
                                         ),
                                         SizedBox(
                                           height: 25,

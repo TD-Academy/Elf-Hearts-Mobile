@@ -7,16 +7,16 @@ class LocalStorageService {
 
   writeData(StorageKey key, String? value) async {
     await _storage.write(key: key.name, value: value);
+    print('Local Storage: save $key : $value');
   }
 
   readData(StorageKey key) async {
     var readData = await _storage.read(key: key.name);
-    return readData;
   }
 
   readAllData() async {
     Map<String, String> readAllData = await _storage.readAll();
-    return readAllData;
+    print('$readAllData');
   }
 
   deleteData(StorageKey key) async {

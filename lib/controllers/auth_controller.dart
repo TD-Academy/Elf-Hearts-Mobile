@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:users/models/user_model.dart';
@@ -47,9 +46,9 @@ class AuthController extends ChangeNotifier {
     }
   }
 
-  logOut() {
-    storage.deleteData(StorageKey.accessToken);
-    storage.deleteData(StorageKey.refreshToken);
+  logOut() async {
+    await storage.deleteData(StorageKey.accessToken);
+    await storage.readAllData();
     status = AuthStatus.unauthorized;
     notifyListeners();
   }
@@ -62,9 +61,11 @@ class AuthController extends ChangeNotifier {
       final accessToken = authResponse.accessToken;
       final refreshToken = authResponse.refreshToken;
       final userName = authResponse.userName;
+      final userId = authResponse.id;
       await storage.writeData(StorageKey.accessToken, accessToken);
       await storage.writeData(StorageKey.refreshToken, refreshToken);
       await storage.writeData(StorageKey.userName, userName);
+      await storage.writeData(StorageKey.userId, userId);
       if (response.statusCode == 201) {
         isBack = true;
         status = AuthStatus.authorized;
