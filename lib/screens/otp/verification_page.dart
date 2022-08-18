@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './components/otp_styles.dart';
-import 'components/otp_form.dart';
+import './components/otp_form.dart';
 import '../../services/storage_service.dart';
 import '../../controllers/auth_controller.dart';
 import '../../models/user_model.dart';
@@ -20,7 +20,7 @@ class _VerificationPageState extends State<VerificationPage> {
   Future<void> _resendOtp() async {
     Users body = Users(email: email);
     var provider = Provider.of<AuthController>(context, listen: false);
-    await provider.resendOtp(body);
+    await provider.sendOtp(body);
     if (provider.isBack) {
       otpMes = 'Resent Code.';
       Future.delayed(const Duration(seconds: 6), () {

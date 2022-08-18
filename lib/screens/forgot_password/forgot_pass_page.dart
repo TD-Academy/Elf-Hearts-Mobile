@@ -3,23 +3,29 @@ import '../../models/user_model.dart';
 import 'package:provider/provider.dart';
 import 'package:users/controllers/auth_controller.dart';
 
-class ChangePassPage extends StatefulWidget {
-  const ChangePassPage({Key? key}) : super(key: key);
+class ForgotPassPage extends StatefulWidget {
+  const ForgotPassPage({Key? key}) : super(key: key);
 
   @override
-  State<ChangePassPage> createState() => _ChangePassPageState();
+  State<ForgotPassPage> createState() => _ForgotPassPageState();
 }
 
-class _ChangePassPageState extends State<ChangePassPage> {
+class _ForgotPassPageState extends State<ForgotPassPage> {
+  String respMes = '';
   var emailController = TextEditingController();
 
   Future<void> sendOtp() async {
     String email = emailController.text.trim();
-    Users body = Users(email: email);
-    var provider = Provider.of<AuthController>(context, listen: false);
-    await provider.signUp(body);
-    if (provider.isBack) {
-      Navigator.of(context).pushNamed('/otp');
+    if (email != null) {
+      Users body = Users(email: email);
+      var provider = Provider.of<AuthController>(context, listen: false);
+      await provider.sendOtp(body);
+      if (provider.isBack) {
+        respMes = '';
+        Navigator.of(context).pushNamed('/otp');
+      }
+    } else {
+      respMes = 'Email field must be filled!';
     }
   }
 
@@ -48,11 +54,13 @@ class _ChangePassPageState extends State<ChangePassPage> {
                     const SizedBox(
                       height: 20,
                     ),
+                    Text(respMes),
                     const SizedBox(
                       height: 40,
                     ),
                     TextButton(
-                        onPressed: () {}, child: const Text("Send Code")),
+                        onPressed: () {},
+                        child: const Text("Send Verification Code")),
                     const SizedBox(
                       height: 40,
                     ),

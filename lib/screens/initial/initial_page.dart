@@ -16,9 +16,6 @@ class _InitialPageState extends State<InitialPage> {
   AuthController authController = AuthController();
   @override
   Widget build(BuildContext context) {
-    // if user is authorized display homepage
-    // if user is unauthorized display startpage
-    // if loading = true display Loading page
     return Consumer<AuthController>(
       builder: (_, auth, __) {
         print(auth.status);
@@ -29,11 +26,5 @@ class _InitialPageState extends State<InitialPage> {
                 : const StartPage();
       },
     );
-    // switch (authController.status == AuthStatus.authorized) {
-    //   case true: {HomePage();}
-    //   break;
-    //   case false: {StartPage()}
-    //   break;
-    // }
   }
 }

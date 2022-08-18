@@ -12,20 +12,26 @@ class FillInfoForm extends StatefulWidget {
 }
 
 class _FillInfoFormState extends State<FillInfoForm> {
-  var firstNameController = TextEditingController(text: 'Tergel');
-  var lastNameController = TextEditingController(text: 'Bayarsaikhan');
-  var phoneNumberController = TextEditingController(text: '88127462');
+  String respMes = '';
+  var firstNameController = TextEditingController();
+  var lastNameController = TextEditingController();
+  var phoneNumberController = TextEditingController();
 
   Future<void> _fillInfo() async {
     String firstName = firstNameController.text.trim();
     String lastName = lastNameController.text.trim();
     String phoneNumber = phoneNumberController.text.trim();
-    Users body =
-        Users(firstName: firstName, lastName: lastName, phone: phoneNumber);
-    var provider = Provider.of<AuthController>(context, listen: false);
-    await provider.signUp(body);
-    if (provider.isBack) {
-      Navigator.of(context).pushNamed('/home');
+    if (firstName != '' && lastName != '' && phoneNumber != '') {
+      respMes = '';
+      Users body =
+          Users(firstName: firstName, lastName: lastName, phone: phoneNumber);
+      var provider = Provider.of<AuthController>(context, listen: false);
+      await provider.fillInfo(body);
+      if (provider.isBack) {
+        Navigator.of(context).pushNamed('/home');
+      }
+    } else {
+      respMes = 'All fields must be filled!';
     }
   }
 
@@ -73,7 +79,9 @@ class _FillInfoFormState extends State<FillInfoForm> {
             _fillInfo();
           },
           child: const Text('Submit'),
-        )
+        ),
+        const SizedBox(height: 20),
+        Text(respMes),
       ],
     );
   }

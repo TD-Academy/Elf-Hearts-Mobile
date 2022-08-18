@@ -16,6 +16,8 @@ class OtpForm extends StatefulWidget {
 class _OtpFormState extends State<OtpForm> {
   final storage = LocalStorageService();
 
+  String respMes = '';
+
   late FocusNode pinFocus1;
   late FocusNode pinFocus2;
   late FocusNode pinFocus3;
@@ -39,8 +41,6 @@ class _OtpFormState extends State<OtpForm> {
     String otp = pin1 + pin2 + pin3 + pin4 + pin5 + pin6;
 
     String id = await storage.readData(StorageKey.userId);
-    print(id);
-
     Users otpBody = Users(
       verifyCode: otp,
       id: id,
@@ -48,7 +48,10 @@ class _OtpFormState extends State<OtpForm> {
     var provider = Provider.of<AuthController>(context, listen: false);
     await provider.verify(otpBody);
     if (provider.isBack) {
-      Navigator.of(context).pushNamed('/home');
+      respMes = '';
+      Navigator.of(context).pushNamed('/verified');
+    } else {
+      respMes = 'Incorrect Verification Code';
     }
   }
 
@@ -232,7 +235,11 @@ class _OtpFormState extends State<OtpForm> {
               child: const Text("Submit"),
             )
           ],
-        )
+        ),
+        SizedBox(
+          height: screenHeight * 0.02,
+        ),
+        Text(respMes)
       ],
     ));
   }

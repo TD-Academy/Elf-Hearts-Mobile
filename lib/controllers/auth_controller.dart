@@ -1,13 +1,16 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:users/models/user_model.dart';
-import 'package:users/services/auth_service.dart';
-import 'package:users/services/storage_service.dart';
-import 'package:users/models/responses/auth_responses.dart';
+import '../models/user_model.dart';
+import '../services/auth_service.dart';
+import '../services/storage_service.dart';
+import '../models/responses/auth_responses.dart';
 import 'dart:async';
 
 enum AuthStatus { authorized, unauthorized, loading }
+
+enum VerificationInstance { forgotPass, signUp }
+// enum VerifiedStatus { verified, notVerified }
 
 class AuthController extends ChangeNotifier {
   static const String signInEndpoint = "/signIn";
@@ -15,10 +18,12 @@ class AuthController extends ChangeNotifier {
   static const String fillInfoEndpoint = "";
   static const String otpEndpoint = "/approve";
   static const String tokenRefreshEndpoint = "";
-  static const String resendOtpEndpoint = "";
+  static const String sendOtpEndpoint = "";
   final storage = LocalStorageService();
   bool isBack = false;
   AuthStatus status = AuthStatus.loading;
+  // VerifiedStatus verifiedStatus = VerifiedStatus.notVerified;
+  VerificationInstance verificationInstance = VerificationInstance.forgotPass;
 
   AuthController() {
     init();
@@ -75,8 +80,7 @@ class AuthController extends ChangeNotifier {
   }
 
   logOut() async {
-    await storage.deleteData(StorageKey.accessToken);
-    await storage.readAllData();
+    await storage.deleteAllData();
     status = AuthStatus.unauthorized;
     notifyListeners();
   }
@@ -133,9 +137,27 @@ class AuthController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> resendOtp(Users body) async {
+  Future<void> sendOtp(Users body) async {
     try {
-      http.Response response = (await postData(body, resendOtpEndpoint))!;
+      http.Response response = (await postData(body, sendOtpEndpoint))!;
+      if (response.statusCode == 201) {
+        isBack = true;
+        // verifiedStatus = VerifiedStatus.verified;
+        verificationInstance = VerificationInstance.forgotPass;
+        notifyListeners();
+      }
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
+    notifyListeners();
+  }
+  // boiler plate clone hiij code oo oruulah
+  // http giin orond dio ashiglah
+
+  Future<void> changePass(Users body) async {
+    try {
+      http.Response response = (await postData(body, sendOtpEndpoint))!;
       if (response.statusCode == 201) {
         isBack = true;
       }
@@ -174,6 +196,8 @@ class AuthController extends ChangeNotifier {
       await storage.writeData(StorageKey.email, email);
       if (response.statusCode == 201) {
         isBack = true;
+        verificationInstance = VerificationInstance.signUp;
+        notifyListeners();
       }
       await tokenInterval();
       notifyListeners();

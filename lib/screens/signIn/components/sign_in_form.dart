@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:users/controllers/auth_controller.dart';
@@ -14,17 +12,23 @@ class SignInForm extends StatefulWidget {
 }
 
 class _SignInFormState extends State<SignInForm> {
+  String respMes = '';
   var userNameController = TextEditingController(text: 'Tergel');
   var passwordController = TextEditingController(text: 'Tergel88');
 
   Future<void> _signIn() async {
     String userName = userNameController.text.trim();
     String password = passwordController.text.trim();
-    Users body = Users(userName: userName, password: password);
-    var provider = Provider.of<AuthController>(context, listen: false);
-    await provider.signIn(body);
-    if (provider.isBack) {
-      Navigator.of(context).pushNamed('/home');
+    if (userName != '' && password != '') {
+      respMes = '';
+      Users body = Users(userName: userName, password: password);
+      var provider = Provider.of<AuthController>(context, listen: false);
+      await provider.signIn(body);
+      if (provider.isBack) {
+        Navigator.of(context).pushNamed('/home');
+      }
+    } else {
+      respMes = 'All fields must be filled!';
     }
   }
 
@@ -68,7 +72,7 @@ class _SignInFormState extends State<SignInForm> {
         const SizedBox(height: 25),
         TextButton(
           onPressed: () {
-            Navigator.of(context).pushNamed('/password');
+            Navigator.of(context).pushNamed('/forgot_pass');
           },
           child: const Text('Forgot password'),
         ),
@@ -80,7 +84,9 @@ class _SignInFormState extends State<SignInForm> {
           },
           child: const Text('Log In'),
         ),
-        const SizedBox(height: 100),
+        const SizedBox(height: 30),
+        Text(respMes),
+        const SizedBox(height: 70),
         ElevatedButton(
           child: const Text('Go Back'),
           onPressed: () {

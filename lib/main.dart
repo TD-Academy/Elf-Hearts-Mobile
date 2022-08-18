@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:users/screens/loading/loading_page.dart';
-import 'package:users/screens/start/start_page.dart';
-import 'package:users/screens/otp/verification_page.dart';
-import 'package:users/controllers/auth_controller.dart';
-import 'screens/home/home_page.dart';
-import 'screens/signIn/sign_in_page.dart';
-import 'screens/signUp/sign_up_page.dart';
 import 'package:provider/provider.dart';
-import 'screens/initial/initial_page.dart';
-import 'screens/forgot_password/change_pass.dart';
-import 'screens/forgot_password/change_pass_verify.dart';
-import 'screens/signUp/fill_info_page.dart';
+import './screens/forgot_password/forgot_pass_page.dart';
+import './screens/loading/loading_page.dart';
+import './screens/otp/verified_page.dart';
+import './screens/start/start_page.dart';
+import './screens/otp/verification_page.dart';
+import './controllers/auth_controller.dart';
+import './screens/home/home_page.dart';
+import './screens/signIn/sign_in_page.dart';
+import './screens/signUp/sign_up_page.dart';
+import './screens/initial/initial_page.dart';
+import './screens/signUp/fill_info_page.dart';
 
 void main() {
   runApp(MultiProvider(providers: [
@@ -37,8 +37,8 @@ class MyApp extends StatelessWidget {
         '/signIn': (context) => const LogInPage(),
         '/signUp': (context) => const SignUpPage(),
         '/otp': (context) => const VerificationPage(),
-        '/password': (context) => const ChangePassPage(),
-        '/pass': (context) => const ChangePass()
+        '/verified': (context) => const VerifiedPage(),
+        '/forgot_pass': (context) => const ForgotPassPage()
       },
       initialRoute: '/initial',
     );

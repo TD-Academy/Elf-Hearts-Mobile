@@ -13,19 +13,25 @@ class SignUpForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<SignUpForm> {
-  var userNameController = TextEditingController(text: 'Tergel');
-  var emailController = TextEditingController(text: 'tergel7006@gmail.com');
-  var passwordController = TextEditingController(text: 'Tergel88');
+  String respMes = '';
+  var userNameController = TextEditingController();
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
 
   Future<void> _registration() async {
     String userName = userNameController.text.trim();
     String password = passwordController.text.trim();
     String email = emailController.text.trim();
-    Users body = Users(userName: userName, password: password, email: email);
-    var provider = Provider.of<AuthController>(context, listen: false);
-    await provider.signUp(body);
-    if (provider.isBack) {
-      Navigator.of(context).pushNamed('/otp');
+    if (userName != '' && password != '' && email != '') {
+      respMes = '';
+      Users body = Users(userName: userName, password: password, email: email);
+      var provider = Provider.of<AuthController>(context, listen: false);
+      await provider.signUp(body);
+      if (provider.isBack) {
+        Navigator.of(context).pushNamed('/otp');
+      }
+    } else {
+      respMes = 'All fields must be filled!';
     }
   }
 
@@ -74,6 +80,8 @@ class _SignUpFormState extends State<SignUpForm> {
           },
           child: const Text('Sign Up'),
         ),
+        const SizedBox(height: 20),
+        Text(respMes),
         const SizedBox(height: 60),
         ElevatedButton(
           child: const Text('Go Back'),

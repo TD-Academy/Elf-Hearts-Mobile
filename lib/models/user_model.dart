@@ -7,17 +7,18 @@ class Users {
   String? email;
   String? phone;
   String? verifyCode;
+  String? newPassword;
 
-  Users({
-    this.userName,
-    this.password,
-    this.id,
-    this.firstName,
-    this.lastName,
-    this.email,
-    this.phone,
-    this.verifyCode
-  });
+  Users(
+      {this.userName,
+      this.password,
+      this.id,
+      this.firstName,
+      this.lastName,
+      this.email,
+      this.phone,
+      this.verifyCode,
+      this.newPassword});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -29,6 +30,7 @@ class Users {
     (email != null) ? data["email"] = email : null;
     (phone != null) ? data["phone"] = phone : null;
     (verifyCode != null) ? data["verifyCode"] = verifyCode : null;
+    (newPassword != null) ? data["newPassword"] = newPassword : null;
 
     return data;
   }
