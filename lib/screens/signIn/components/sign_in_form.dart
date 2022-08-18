@@ -67,7 +67,9 @@ class _SignInFormState extends State<SignInForm> {
         ),
         const SizedBox(height: 25),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushNamed('/password');
+          },
           child: const Text('Forgot password'),
         ),
         const SizedBox(height: 30),

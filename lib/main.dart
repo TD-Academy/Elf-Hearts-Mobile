@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:users/screens/loading/loading_page.dart';
 import 'package:users/screens/start/start_page.dart';
@@ -8,6 +10,8 @@ import 'screens/signIn/sign_in_page.dart';
 import 'screens/signUp/sign_up_page.dart';
 import 'package:provider/provider.dart';
 import 'screens/initial/initial_page.dart';
+import 'screens/password/change_pass.dart';
+import 'screens/password/change_pass_page.dart';
 
 void main() {
   // For State Management
@@ -33,7 +37,9 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const HomePage(),
         '/signIn': (context) => const LogInPage(),
         '/signUp': (context) => const SignUpPage(),
-        '/otp': (context) => const VerificationPage()
+        '/otp': (context) => const VerificationPage(),
+        '/password': (context) => const ChangePassPage(),
+        '/pass': (context) => const ChangePass()
       },
       initialRoute: '/initial',
     );

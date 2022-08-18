@@ -104,7 +104,7 @@ class _OtpFormState extends State<OtpForm> {
                   focusNode: pinFocus1,
                   autofocus: true,
                   obscureText: false,
-                  style: TextStyle(fontSize: 24),
+                  style: const TextStyle(fontSize: 24),
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
                   decoration: otpInputDecoration,
@@ -123,7 +123,7 @@ class _OtpFormState extends State<OtpForm> {
                   focusNode: pinFocus2,
                   autofocus: true,
                   obscureText: false,
-                  style: TextStyle(fontSize: 24),
+                  style: const TextStyle(fontSize: 24),
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
                   decoration: otpInputDecoration,
@@ -143,7 +143,7 @@ class _OtpFormState extends State<OtpForm> {
                   focusNode: pinFocus3,
                   autofocus: true,
                   obscureText: false,
-                  style: TextStyle(fontSize: 24),
+                  style: const TextStyle(fontSize: 24),
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
                   decoration: otpInputDecoration,
@@ -163,7 +163,7 @@ class _OtpFormState extends State<OtpForm> {
                   focusNode: pinFocus4,
                   autofocus: true,
                   obscureText: false,
-                  style: TextStyle(fontSize: 24),
+                  style: const TextStyle(fontSize: 24),
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
                   decoration: otpInputDecoration,
@@ -183,7 +183,7 @@ class _OtpFormState extends State<OtpForm> {
                   focusNode: pinFocus5,
                   autofocus: true,
                   obscureText: false,
-                  style: TextStyle(fontSize: 24),
+                  style: const TextStyle(fontSize: 24),
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
                   decoration: otpInputDecoration,
@@ -203,7 +203,7 @@ class _OtpFormState extends State<OtpForm> {
                     focusNode: pinFocus6,
                     autofocus: true,
                     obscureText: false,
-                    style: TextStyle(fontSize: 24),
+                    style: const TextStyle(fontSize: 24),
                     keyboardType: TextInputType.number,
                     textAlign: TextAlign.center,
                     decoration: otpInputDecoration,
@@ -211,7 +211,6 @@ class _OtpFormState extends State<OtpForm> {
                       if (value.length == 1) {
                         pinFocus6.unfocus();
                       }
-                      ;
                       prevField(value, pinFocus5);
                     },
                     controller: pin6Controller,
