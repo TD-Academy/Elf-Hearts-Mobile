@@ -58,6 +58,7 @@ class _SignUpFormState extends State<SignUpForm> {
           ),
           controller: emailController,
         ),
+        const SizedBox(height: 20),
         TextFormField(
           decoration: const InputDecoration(
             icon: Icon(Icons.lock),
