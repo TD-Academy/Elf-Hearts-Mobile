@@ -81,12 +81,6 @@ class AuthController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> changePass(Users body) async {
-    try {
-      http.Response response = (await postData(body, ))
-    }
-  }
-
   Future<void> verify(Users body) async {
     try {
       print(body.id);
@@ -110,13 +104,12 @@ class AuthController extends ChangeNotifier {
         notifyListeners();
       }
       await tokenInterval();
-  } catch (e) {
-    print(e);
-    logOut();
+    } catch (e) {
+      print(e);
+      logOut();
+    }
+    notifyListeners();
   }
-  notifyListeners();
-  }
-
 
   Future<void> signUp(Users body) async {
     try {
