@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:users/controllers/auth_controller.dart';
 import './otp_styles.dart';
@@ -100,91 +101,7 @@ class _OtpFormState extends State<OtpForm> {
             SizedBox(
               width: 50,
               child: TextFormField(
-                focusNode: pinFocus1,
-                autofocus: true,
-                obscureText: false,
-                style: TextStyle(fontSize: 24),
-                keyboardType: TextInputType.number,
-                textAlign: TextAlign.center,
-                decoration: otpInputDecoration,
-                onChanged: (value) {
-                  nextField(value, pinFocus2);
-                },
-                controller: pin1Controller,
-              ),
-            ),
-            SizedBox(
-              width: 50,
-              child: TextFormField(
-                focusNode: pinFocus2,
-                autofocus: true,
-                obscureText: false,
-                style: TextStyle(fontSize: 24),
-                keyboardType: TextInputType.number,
-                textAlign: TextAlign.center,
-                decoration: otpInputDecoration,
-                onChanged: (value) {
-                  nextField(value, pinFocus3);
-                  prevField(value, pinFocus1);
-                },
-                controller: pin2Controller,
-              ),
-            ),
-            SizedBox(
-              width: 50,
-              child: TextFormField(
-                focusNode: pinFocus3,
-                autofocus: true,
-                obscureText: false,
-                style: TextStyle(fontSize: 24),
-                keyboardType: TextInputType.number,
-                textAlign: TextAlign.center,
-                decoration: otpInputDecoration,
-                onChanged: (value) {
-                  nextField(value, pinFocus4);
-                  prevField(value, pinFocus2);
-                },
-                controller: pin3Controller,
-              ),
-            ),
-            SizedBox(
-              width: 50,
-              child: TextFormField(
-                focusNode: pinFocus4,
-                autofocus: true,
-                obscureText: false,
-                style: TextStyle(fontSize: 24),
-                keyboardType: TextInputType.number,
-                textAlign: TextAlign.center,
-                decoration: otpInputDecoration,
-                onChanged: (value) {
-                  nextField(value, pinFocus5);
-                  prevField(value, pinFocus3);
-                },
-                controller: pin4Controller,
-              ),
-            ),
-            SizedBox(
-              width: 50,
-              child: TextFormField(
-                focusNode: pinFocus5,
-                autofocus: true,
-                obscureText: false,
-                style: TextStyle(fontSize: 24),
-                keyboardType: TextInputType.number,
-                textAlign: TextAlign.center,
-                decoration: otpInputDecoration,
-                onChanged: (value) {
-                  nextField(value, pinFocus6);
-                  prevField(value, pinFocus4);
-                },
-                controller: pin5Controller,
-              ),
-            ),
-            SizedBox(
-                width: 50,
-                child: TextFormField(
-                  focusNode: pinFocus6,
+                  focusNode: pinFocus1,
                   autofocus: true,
                   obscureText: false,
                   style: TextStyle(fontSize: 24),
@@ -192,14 +109,116 @@ class _OtpFormState extends State<OtpForm> {
                   textAlign: TextAlign.center,
                   decoration: otpInputDecoration,
                   onChanged: (value) {
-                    if (value.length == 1) {
-                      pinFocus6.unfocus();
-                    }
-                    ;
-                    prevField(value, pinFocus5);
+                    nextField(value, pinFocus2);
                   },
-                  controller: pin6Controller,
-                ))
+                  controller: pin1Controller,
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(1),
+                    FilteringTextInputFormatter.digitsOnly,
+                  ]),
+            ),
+            SizedBox(
+              width: 50,
+              child: TextFormField(
+                  focusNode: pinFocus2,
+                  autofocus: true,
+                  obscureText: false,
+                  style: TextStyle(fontSize: 24),
+                  keyboardType: TextInputType.number,
+                  textAlign: TextAlign.center,
+                  decoration: otpInputDecoration,
+                  onChanged: (value) {
+                    nextField(value, pinFocus3);
+                    prevField(value, pinFocus1);
+                  },
+                  controller: pin2Controller,
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(1),
+                    FilteringTextInputFormatter.digitsOnly,
+                  ]),
+            ),
+            SizedBox(
+              width: 50,
+              child: TextFormField(
+                  focusNode: pinFocus3,
+                  autofocus: true,
+                  obscureText: false,
+                  style: TextStyle(fontSize: 24),
+                  keyboardType: TextInputType.number,
+                  textAlign: TextAlign.center,
+                  decoration: otpInputDecoration,
+                  onChanged: (value) {
+                    nextField(value, pinFocus4);
+                    prevField(value, pinFocus2);
+                  },
+                  controller: pin3Controller,
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(1),
+                    FilteringTextInputFormatter.digitsOnly,
+                  ]),
+            ),
+            SizedBox(
+              width: 50,
+              child: TextFormField(
+                  focusNode: pinFocus4,
+                  autofocus: true,
+                  obscureText: false,
+                  style: TextStyle(fontSize: 24),
+                  keyboardType: TextInputType.number,
+                  textAlign: TextAlign.center,
+                  decoration: otpInputDecoration,
+                  onChanged: (value) {
+                    nextField(value, pinFocus5);
+                    prevField(value, pinFocus3);
+                  },
+                  controller: pin4Controller,
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(1),
+                    FilteringTextInputFormatter.digitsOnly,
+                  ]),
+            ),
+            SizedBox(
+              width: 50,
+              child: TextFormField(
+                  focusNode: pinFocus5,
+                  autofocus: true,
+                  obscureText: false,
+                  style: TextStyle(fontSize: 24),
+                  keyboardType: TextInputType.number,
+                  textAlign: TextAlign.center,
+                  decoration: otpInputDecoration,
+                  onChanged: (value) {
+                    nextField(value, pinFocus6);
+                    prevField(value, pinFocus4);
+                  },
+                  controller: pin5Controller,
+                  inputFormatters: [
+                    LengthLimitingTextInputFormatter(1),
+                    FilteringTextInputFormatter.digitsOnly,
+                  ]),
+            ),
+            SizedBox(
+                width: 50,
+                child: TextFormField(
+                    focusNode: pinFocus6,
+                    autofocus: true,
+                    obscureText: false,
+                    style: TextStyle(fontSize: 24),
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    decoration: otpInputDecoration,
+                    onChanged: (value) {
+                      if (value.length == 1) {
+                        pinFocus6.unfocus();
+                      }
+                      ;
+                      prevField(value, pinFocus5);
+                    },
+                    controller: pin6Controller,
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(1),
+                      FilteringTextInputFormatter.digitsOnly,
+                    ]))
           ],
         ),
         SizedBox(
