@@ -13,27 +13,15 @@ class SignUpForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<SignUpForm> {
-  var firstNameController = TextEditingController(text: 'Tergel');
-  var lastNameController = TextEditingController(text: 'Bayarsaikhan');
   var userNameController = TextEditingController(text: 'Tergel');
   var emailController = TextEditingController(text: 'tergel7006@gmail.com');
-  var phoneNumberController = TextEditingController(text: '88127462');
   var passwordController = TextEditingController(text: 'Tergel88');
 
   Future<void> _registration() async {
     String userName = userNameController.text.trim();
     String password = passwordController.text.trim();
-    String firstName = firstNameController.text.trim();
-    String lastName = lastNameController.text.trim();
     String email = emailController.text.trim();
-    String phoneNumber = phoneNumberController.text.trim();
-    Users body = Users(
-        userName: userName,
-        password: password,
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        phone: phoneNumber);
+    Users body = Users(userName: userName, password: password, email: email);
     var provider = Provider.of<AuthController>(context, listen: false);
     await provider.signUp(body);
     if (provider.isBack) {
@@ -58,22 +46,6 @@ class _SignUpFormState extends State<SignUpForm> {
         TextFormField(
           decoration: const InputDecoration(
             icon: Icon(Icons.person),
-            labelText: 'Firstname',
-          ),
-          controller: firstNameController,
-        ),
-        const SizedBox(height: 20),
-        TextFormField(
-          decoration: const InputDecoration(
-            icon: Icon(Icons.person),
-            labelText: 'Lastname',
-          ),
-          controller: lastNameController,
-        ),
-        const SizedBox(height: 20),
-        TextFormField(
-          decoration: const InputDecoration(
-            icon: Icon(Icons.person),
             labelText: 'Username',
           ),
           controller: userNameController,
@@ -89,21 +61,12 @@ class _SignUpFormState extends State<SignUpForm> {
         const SizedBox(height: 20),
         TextFormField(
           decoration: const InputDecoration(
-            icon: Icon(Icons.phone),
-            labelText: 'Phone number',
-          ),
-          controller: phoneNumberController,
-        ),
-        const SizedBox(height: 20),
-        TextFormField(
-          decoration: const InputDecoration(
             icon: Icon(Icons.lock),
             labelText: 'Password',
           ),
           controller: passwordController,
         ),
-        const SizedBox(height: 25),
-        const SizedBox(height: 30),
+        const SizedBox(height: 55),
         TextButton(
           style: TextButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
           onPressed: () {

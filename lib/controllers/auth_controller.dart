@@ -12,7 +12,10 @@ enum AuthStatus { authorized, unauthorized, loading }
 class AuthController extends ChangeNotifier {
   static const String signInEndpoint = "/signIn";
   static const String signUpEndpoint = "/signUp";
+  static const String fillInfoEndpoint = "";
   static const String otpEndpoint = "/approve";
+  static const String tokenRefreshEndpoint = "";
+  static const String resendOtpEndpoint = "";
   final storage = LocalStorageService();
   bool isBack = false;
   AuthStatus status = AuthStatus.loading;
@@ -37,11 +40,35 @@ class AuthController extends ChangeNotifier {
         status = AuthStatus.authorized;
         notifyListeners();
       } else {
-        status = AuthStatus.unauthorized;
-        notifyListeners();
-        // logOut();
+        try {
+          if (await storage.readData(StorageKey.refreshToken) != null) {
+            tokenRefresh(await storage.readData(StorageKey.refreshToken));
+          } else {
+            logOut();
+          }
+        } on Exception catch (e) {
+          print(e);
+          logOut();
+        }
       }
     } on Exception catch (e) {
+      print(e);
+      logOut();
+    }
+  }
+
+  Future<void> tokenRefresh(body) async {
+    try {
+      http.Response response = (await postData(body, tokenRefreshEndpoint))!;
+      final responseBody = jsonDecode(response.body);
+      AuthResponse authResponse = AuthResponse.fromJson(responseBody);
+      final accessToken = authResponse.accessToken;
+      final refreshToken = authResponse.refreshToken;
+      await storage.writeData(StorageKey.accessToken, accessToken);
+      await storage.writeData(StorageKey.refreshToken, refreshToken);
+      status = AuthStatus.authorized;
+      notifyListeners();
+    } catch (e) {
       print(e);
       logOut();
     }
@@ -83,13 +110,9 @@ class AuthController extends ChangeNotifier {
 
   Future<void> verify(Users body) async {
     try {
-      print(body.id);
       http.Response response = (await postData(body, otpEndpoint))!;
-      print(response.statusCode);
       final responseBody = jsonDecode(response.body);
       AuthResponse authResponse = AuthResponse.fromJson(responseBody);
-      print(authResponse.accessToken);
-      print(responseBody['access_token']);
       final accessToken = authResponse.accessToken;
       final refreshToken = authResponse.refreshToken;
       final userName = authResponse.userName;
@@ -98,6 +121,35 @@ class AuthController extends ChangeNotifier {
       await storage.writeData(StorageKey.refreshToken, refreshToken);
       await storage.writeData(StorageKey.userName, userName);
       await storage.writeData(StorageKey.userId, userId);
+      if (response.statusCode == 201) {
+        isBack = true;
+      }
+      await tokenInterval();
+      notifyListeners();
+    } catch (e) {
+      print(e);
+      logOut();
+    }
+    notifyListeners();
+  }
+
+  Future<void> resendOtp(Users body) async {
+    try {
+      http.Response response = (await postData(body, resendOtpEndpoint))!;
+      if (response.statusCode == 201) {
+        isBack = true;
+      }
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
+    notifyListeners();
+  }
+
+  Future<void> fillInfo(Users body) async {
+    try {
+      http.Response response = (await postData(body, signUpEndpoint))!;
+      // code
       if (response.statusCode == 201) {
         isBack = true;
         status = AuthStatus.authorized;
@@ -114,23 +166,20 @@ class AuthController extends ChangeNotifier {
   Future<void> signUp(Users body) async {
     try {
       http.Response response = (await postData(body, signUpEndpoint))!;
-      print(response.statusCode);
-      print(response.body);
       final responseBody = jsonDecode(response.body);
       AuthResponse authResponse = AuthResponse.fromJson(responseBody);
       final id = authResponse.id;
+      final email = authResponse.email;
       await storage.writeData(StorageKey.userId, id);
+      await storage.writeData(StorageKey.email, email);
       if (response.statusCode == 201) {
         isBack = true;
       }
       await tokenInterval();
       notifyListeners();
-      // otp page connect and check
     } catch (e) {
       print(e);
     }
     notifyListeners();
   }
 }
-
-// function to refresh access token with refresh token

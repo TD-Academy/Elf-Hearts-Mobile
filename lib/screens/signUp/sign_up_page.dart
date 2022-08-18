@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:users/screens/signUp/components/sign_up_desktop.dart';
-import 'package:users/screens/signUp/components/sign_up_tablet.dart';
-import 'components/sign_up_mobile.dart';
-
+import 'package:users/screens/signUp/components/pages/sign_up/sign_up_desktop.dart';
+import 'package:users/screens/signUp/components/pages/sign_up/sign_up_tablet.dart';
+import 'components/pages/sign_up/sign_up_mobile.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({Key? key}) : super(key: key);

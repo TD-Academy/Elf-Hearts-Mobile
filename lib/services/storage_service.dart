@@ -1,10 +1,10 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:http/http.dart';
 
-enum StorageKey { userName, userId, accessToken, refreshToken }
+enum StorageKey { userName, userId, accessToken, refreshToken, email }
 
 class LocalStorageService {
-  final _storage = const FlutterSecureStorage(aOptions: AndroidOptions(encryptedSharedPreferences: true));
+  final _storage = const FlutterSecureStorage(
+      aOptions: AndroidOptions(encryptedSharedPreferences: true));
 
   writeData(StorageKey key, String? value) async {
     await _storage.write(key: key.name, value: value);

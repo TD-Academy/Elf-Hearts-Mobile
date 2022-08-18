@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'screens/initial/initial_page.dart';
 import 'screens/forgot_password/change_pass.dart';
 import 'screens/forgot_password/change_pass_verify.dart';
+import 'screens/signUp/fill_info_page.dart';
 
 void main() {
   runApp(MultiProvider(providers: [
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(brightness: Brightness.dark),
       routes: {
+        '/fillInfo': (context) => const FillInfoPage(),
         '/initial': (context) => const InitialPage(),
         '/loading': (context) => const LoadingPage(),
         '/start': (context) => const StartPage(),
