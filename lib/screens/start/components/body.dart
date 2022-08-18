@@ -34,17 +34,6 @@ class _StartPageBodyState extends State<StartPageBody> {
                 Navigator.of(context).pushNamed('/signUp');
               },
             ),
-          ),
-          const Padding(padding: EdgeInsets.fromLTRB(0, 20, 0, 20)),
-          SizedBox(
-            height: 75,
-            width: 200,
-            child: ElevatedButton(
-              child: const Text('Verification Code'),
-              onPressed: () {
-                Navigator.of(context).pushNamed('/otp');
-              },
-            ),
           )
         ],
       ),
