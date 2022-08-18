@@ -12,6 +12,7 @@ enum AuthStatus { authorized, unauthorized, loading }
 class AuthController extends ChangeNotifier {
   static const String signInEndpoint = "/signIn";
   static const String signUpEndpoint = "/signUp";
+  static const String otpEndpoint = "/approve";
   final storage = LocalStorageService();
   bool isBack = false;
   AuthStatus status = AuthStatus.loading;
@@ -80,16 +81,50 @@ class AuthController extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> verify(Users body) async {
+    try {
+      print(body.id);
+      http.Response response = (await postData(body, otpEndpoint))!;
+      print(response.statusCode);
+      final responseBody = jsonDecode(response.body);
+      AuthResponse authResponse = AuthResponse.fromJson(responseBody);
+      print(authResponse.accessToken);
+      print(responseBody['access_token']);
+      final accessToken = authResponse.accessToken;
+      final refreshToken = authResponse.refreshToken;
+      final userName = authResponse.userName;
+      final userId = authResponse.id;
+      await storage.writeData(StorageKey.accessToken, accessToken);
+      await storage.writeData(StorageKey.refreshToken, refreshToken);
+      await storage.writeData(StorageKey.userName, userName);
+      await storage.writeData(StorageKey.userId, userId);
+      if (response.statusCode == 201) {
+        isBack = true;
+        status = AuthStatus.authorized;
+        notifyListeners();
+      }
+      await tokenInterval();
+  } catch (e) {
+    print(e);
+    logOut();
+  }
+  notifyListeners();
+  }
+
+
   Future<void> signUp(Users body) async {
     try {
       http.Response response = (await postData(body, signUpEndpoint))!;
-      // final responseBody = jsonDecode(response.body);
-      // AuthResponse authResponse = AuthResponse.fromJson(responseBody);
-      // final id = authResponse.id;
-      // await storage.writeData(StorageKey.userId, id);
+      print(response.statusCode);
+      print(response.body);
+      final responseBody = jsonDecode(response.body);
+      AuthResponse authResponse = AuthResponse.fromJson(responseBody);
+      final id = authResponse.id;
+      await storage.writeData(StorageKey.userId, id);
       if (response.statusCode == 201) {
         isBack = true;
       }
+      await tokenInterval();
       notifyListeners();
       // otp page connect and check
     } catch (e) {

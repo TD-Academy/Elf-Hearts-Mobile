@@ -13,12 +13,12 @@ class SignUpForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<SignUpForm> {
-  var firstNameController = TextEditingController();
-  var lastNameController = TextEditingController();
-  var userNameController = TextEditingController();
-  var emailController = TextEditingController();
-  var phoneNumberController = TextEditingController();
-  var passwordController = TextEditingController();
+  var firstNameController = TextEditingController(text: 'Tergel');
+  var lastNameController = TextEditingController(text: 'Bayarsaikhan');
+  var userNameController = TextEditingController(text: 'Tergel');
+  var emailController = TextEditingController(text: 'tergel7006@gmail.com');
+  var phoneNumberController = TextEditingController(text: '88127462');
+  var passwordController = TextEditingController(text: 'Tergel88');
 
   Future<void> _registration() async {
     String userName = userNameController.text.trim();
@@ -33,7 +33,7 @@ class _SignUpFormState extends State<SignUpForm> {
         firstName: firstName,
         lastName: lastName,
         email: email,
-        phone: '976|$phoneNumber');
+        phone: phoneNumber);
     var provider = Provider.of<AuthController>(context, listen: false);
     await provider.signUp(body);
     if (provider.isBack) {
