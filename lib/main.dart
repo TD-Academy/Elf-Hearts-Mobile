@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:users/screens/loading/loading_page.dart';
 import 'package:users/screens/start/start_page.dart';
@@ -10,11 +8,10 @@ import 'screens/signIn/sign_in_page.dart';
 import 'screens/signUp/sign_up_page.dart';
 import 'package:provider/provider.dart';
 import 'screens/initial/initial_page.dart';
-import 'screens/password/change_pass.dart';
-import 'screens/password/change_pass_page.dart';
+import 'screens/forgot_password/change_pass.dart';
+import 'screens/forgot_password/change_pass_verify.dart';
 
 void main() {
-  // For State Management
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => AuthController()),
   ], child: const MyApp()));

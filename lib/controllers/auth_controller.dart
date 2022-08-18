@@ -81,6 +81,12 @@ class AuthController extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> changePass(Users body) async {
+    try {
+      http.Response response = (await postData(body, ))
+    }
+  }
+
   Future<void> verify(Users body) async {
     try {
       print(body.id);
