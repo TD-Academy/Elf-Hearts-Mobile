@@ -20,7 +20,9 @@ class _SignInFormState extends State<SignInForm> {
     String userName = userNameController.text.trim();
     String password = passwordController.text.trim();
     if (userName != '' && password != '') {
-      respMes = '';
+      setState(() {
+        respMes = '';
+      });
       Users body = Users(userName: userName, password: password);
       var provider = Provider.of<AuthController>(context, listen: false);
       await provider.signIn(body);
@@ -28,7 +30,9 @@ class _SignInFormState extends State<SignInForm> {
         Navigator.of(context).pushNamed('/home');
       }
     } else {
-      respMes = 'All fields must be filled!';
+      setState(() {
+        respMes = 'All fields must be filled!';
+      });
     }
   }
 

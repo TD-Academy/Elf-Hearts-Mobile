@@ -23,7 +23,9 @@ class _SignUpFormState extends State<SignUpForm> {
     String password = passwordController.text.trim();
     String email = emailController.text.trim();
     if (userName != '' && password != '' && email != '') {
-      respMes = '';
+      setState(() {
+        respMes = '';
+      });
       Users body = Users(userName: userName, password: password, email: email);
       var provider = Provider.of<AuthController>(context, listen: false);
       await provider.signUp(body);
@@ -31,7 +33,9 @@ class _SignUpFormState extends State<SignUpForm> {
         Navigator.of(context).pushNamed('/otp');
       }
     } else {
-      respMes = 'All fields must be filled!';
+      setState(() {
+        respMes = 'All fields must be filled!';
+      });
     }
   }
 

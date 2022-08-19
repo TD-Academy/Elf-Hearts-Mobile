@@ -16,16 +16,20 @@ class _ForgotPassPageState extends State<ForgotPassPage> {
 
   Future<void> sendOtp() async {
     String email = emailController.text.trim();
-    if (email != null) {
+    if (email != '') {
+      setState(() {
+        respMes = '';
+      });
       Users body = Users(email: email);
       var provider = Provider.of<AuthController>(context, listen: false);
       await provider.sendOtp(body);
       if (provider.isBack) {
-        respMes = '';
         Navigator.of(context).pushNamed('/otp');
       }
     } else {
-      respMes = 'Email field must be filled!';
+      setState(() {
+        respMes = 'Email field must be filled!';
+      });
     }
   }
 

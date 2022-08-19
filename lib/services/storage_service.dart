@@ -12,8 +12,9 @@ class LocalStorageService {
   }
 
   readData(StorageKey key) async {
-    String? readData = await _storage.read(key: key.name);
-    return readData;
+    final value = await _storage.read(key: key.name);
+    print('Local Storage: read $key : $value');
+    return value;
   }
 
   readAllData() async {

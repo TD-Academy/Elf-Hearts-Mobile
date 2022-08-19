@@ -40,7 +40,7 @@ class _OtpFormState extends State<OtpForm> {
     String pin6 = pin6Controller.text.trim();
     String otp = pin1 + pin2 + pin3 + pin4 + pin5 + pin6;
 
-    String id = await storage.readData(StorageKey.userId);
+    String? id = await storage.readData(StorageKey.userId);
     Users otpBody = Users(
       verifyCode: otp,
       id: id,

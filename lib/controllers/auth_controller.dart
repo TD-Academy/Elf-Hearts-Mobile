@@ -7,7 +7,7 @@ import '../services/storage_service.dart';
 import '../models/responses/auth_responses.dart';
 import 'dart:async';
 
-enum AuthStatus { authorized, unauthorized, loading }
+enum AuthStatus { authorized, loading, unauthorized }
 
 enum VerificationInstance { forgotPass, signUp }
 // enum VerifiedStatus { verified, notVerified }
@@ -22,7 +22,6 @@ class AuthController extends ChangeNotifier {
   final storage = LocalStorageService();
   bool isBack = false;
   AuthStatus status = AuthStatus.loading;
-  // VerifiedStatus verifiedStatus = VerifiedStatus.notVerified;
   VerificationInstance verificationInstance = VerificationInstance.forgotPass;
 
   AuthController() {
@@ -40,21 +39,33 @@ class AuthController extends ChangeNotifier {
   }
 
   checkToken() async {
+    // try {
+    //   if (await storage.readData(StorageKey.accessToken) != null) {
+    //     status = AuthStatus.authorized;
+    //     notifyListeners();
+    //   } else {
+    //     try {
+    //       if (await storage.readData(StorageKey.refreshToken) != null) {
+    //         tokenRefresh(await storage.readData(StorageKey.refreshToken));
+    //       } else {
+    //         logOut();
+    //       }
+    //     } on Exception catch (e) {
+    //       print(e);
+    //       logOut();
+    //     }
+    //   }
+    // } on Exception catch (e) {
+    //   print(e);
+    //   logOut();
+    // }
+
     try {
       if (await storage.readData(StorageKey.accessToken) != null) {
         status = AuthStatus.authorized;
         notifyListeners();
       } else {
-        try {
-          if (await storage.readData(StorageKey.refreshToken) != null) {
-            tokenRefresh(await storage.readData(StorageKey.refreshToken));
-          } else {
-            logOut();
-          }
-        } on Exception catch (e) {
-          print(e);
-          logOut();
-        }
+        logOut();
       }
     } on Exception catch (e) {
       print(e);
@@ -80,7 +91,8 @@ class AuthController extends ChangeNotifier {
   }
 
   logOut() async {
-    await storage.deleteAllData();
+    await storage.deleteData(StorageKey.accessToken);
+    await storage.deleteData(StorageKey.refreshToken);
     status = AuthStatus.unauthorized;
     notifyListeners();
   }
@@ -89,6 +101,7 @@ class AuthController extends ChangeNotifier {
     try {
       http.Response response = (await postData(body, signInEndpoint))!;
       final responseBody = jsonDecode(response.body);
+      print(response.body);
       AuthResponse authResponse = AuthResponse.fromJson(responseBody);
       final accessToken = authResponse.accessToken;
       final refreshToken = authResponse.refreshToken;

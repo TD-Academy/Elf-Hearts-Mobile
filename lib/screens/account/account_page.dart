@@ -18,7 +18,7 @@ class _AccountPageState extends State<AccountPage> {
   bool isLoading = true;
 
   Future<void> _readFromStorage() async {
-    userName = (await storageService.readData(StorageKey.userName)).toString();
+    userName = await storageService.readData(StorageKey.userName);
     print(userName);
     setState(() {
       isLoading = false;

@@ -22,7 +22,9 @@ class _FillInfoFormState extends State<FillInfoForm> {
     String lastName = lastNameController.text.trim();
     String phoneNumber = phoneNumberController.text.trim();
     if (firstName != '' && lastName != '' && phoneNumber != '') {
-      respMes = '';
+      setState(() {
+        respMes = '';
+      });
       Users body =
           Users(firstName: firstName, lastName: lastName, phone: phoneNumber);
       var provider = Provider.of<AuthController>(context, listen: false);
@@ -31,7 +33,9 @@ class _FillInfoFormState extends State<FillInfoForm> {
         Navigator.of(context).pushNamed('/home');
       }
     } else {
-      respMes = 'All fields must be filled!';
+      setState(() {
+        respMes = 'All fields must be filled!';
+      });
     }
   }
 

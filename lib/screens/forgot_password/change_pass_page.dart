@@ -21,7 +21,9 @@ class _ChangePassPageState extends State<ChangePassPage> {
 
     if (newPassword != '' && confirmPassword != '') {
       if (newPassword == confirmPassword) {
-        respMes = '';
+        setState(() {
+          respMes = '';
+        });
         Users body = Users(newPassword: newPassword);
         var provider = Provider.of<AuthController>(context, listen: false);
         provider.changePass(body);
@@ -29,10 +31,14 @@ class _ChangePassPageState extends State<ChangePassPage> {
           Navigator.of(context).pushNamed('signIn');
         }
       } else {
-        respMes = "Passwords doesn't match!";
+        setState(() {
+          respMes = "Passwords doesn't match!";
+        });
       }
     } else {
-      respMes = 'All fields must be filled!';
+      setState(() {
+        respMes = 'All fields must be filled!';
+      });
     }
   }
 
