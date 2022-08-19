@@ -13,17 +13,17 @@ class SignInForm extends StatefulWidget {
 
 class _SignInFormState extends State<SignInForm> {
   String respMes = '';
-  var userNameController = TextEditingController(text: 'Tergel');
+  var emailController = TextEditingController(text: 'tergel7006@gmail.com');
   var passwordController = TextEditingController(text: 'Tergel88');
 
   Future<void> _signIn() async {
-    String userName = userNameController.text.trim();
+    String email = emailController.text.trim();
     String password = passwordController.text.trim();
-    if (userName != '' && password != '') {
+    if (email != '' && password != '') {
       setState(() {
         respMes = '';
       });
-      Users body = Users(userName: userName, password: password);
+      Users body = Users(email: email, password: password);
       var provider = Provider.of<AuthController>(context, listen: false);
       await provider.signIn(body);
       if (provider.isBack) {
@@ -32,6 +32,25 @@ class _SignInFormState extends State<SignInForm> {
     } else {
       setState(() {
         respMes = 'All fields must be filled!';
+      });
+    }
+  }
+
+  Future<void> _sendOtp() async {
+    String email = emailController.text.trim();
+    if (email != '') {
+      setState(() {
+        respMes = '';
+      });
+      Users body = Users(email: email);
+      var provider = Provider.of<AuthController>(context, listen: false);
+      await provider.sendOtp(body);
+      if (provider.isBack) {
+        Navigator.of(context).pushNamed('/otp');
+      }
+    } else {
+      setState(() {
+        respMes = 'Email field must be filled!';
       });
     }
   }
@@ -61,9 +80,9 @@ class _SignInFormState extends State<SignInForm> {
         TextFormField(
           decoration: const InputDecoration(
             icon: Icon(Icons.person),
-            labelText: 'Username',
+            labelText: 'Email',
           ),
-          controller: userNameController,
+          controller: emailController,
         ),
         const SizedBox(height: 20),
         TextFormField(
@@ -76,7 +95,7 @@ class _SignInFormState extends State<SignInForm> {
         const SizedBox(height: 25),
         TextButton(
           onPressed: () {
-            Navigator.of(context).pushNamed('/forgot_pass');
+            _sendOtp();
           },
           child: const Text('Forgot password'),
         ),

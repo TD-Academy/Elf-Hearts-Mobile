@@ -23,11 +23,11 @@ class Users {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     (id != null) ? data["id"] = id : null;
-    data["userName"] = userName;
+    (userName != null) ? data["userName"] = userName : null;
+    data["email"] = email;
     data["password"] = password;
     (firstName != null) ? data["firstName"] = firstName : null;
     (lastName != null) ? data["lastName"] = lastName : null;
-    (email != null) ? data["email"] = email : null;
     (phone != null) ? data["phone"] = phone : null;
     (verifyCode != null) ? data["verifyCode"] = verifyCode : null;
     (newPassword != null) ? data["newPassword"] = newPassword : null;

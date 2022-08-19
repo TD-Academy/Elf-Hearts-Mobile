@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import './screens/forgot_password/forgot_pass_page.dart';
 import './screens/loading/loading_page.dart';
 import './screens/otp/verified_page.dart';
 import './screens/start/start_page.dart';
@@ -38,7 +37,6 @@ class MyApp extends StatelessWidget {
         '/signUp': (context) => const SignUpPage(),
         '/otp': (context) => const VerificationPage(),
         '/verified': (context) => const VerifiedPage(),
-        '/forgot_pass': (context) => const ForgotPassPage()
       },
       initialRoute: '/initial',
     );

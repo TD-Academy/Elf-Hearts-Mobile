@@ -101,7 +101,6 @@ class AuthController extends ChangeNotifier {
     try {
       http.Response response = (await postData(body, signInEndpoint))!;
       final responseBody = jsonDecode(response.body);
-      print(response.body);
       AuthResponse authResponse = AuthResponse.fromJson(responseBody);
       final accessToken = authResponse.accessToken;
       final refreshToken = authResponse.refreshToken;
