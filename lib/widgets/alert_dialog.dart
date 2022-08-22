@@ -24,7 +24,7 @@ Future<void>? CustomAlertDialog(
       ),
     );
   }
-  if (!kIsWeb && Platform.isWindows) {
+  if (!kIsWeb && Platform.isAndroid) {
     return showDialog(
         context: context,
         builder: (_) =>

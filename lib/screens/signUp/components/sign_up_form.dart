@@ -26,7 +26,6 @@ class _SignUpFormState extends State<SignUpForm> {
     String userName = userNameController.text.trim();
     String password = passwordController.text.trim();
     String password1 = passwordController.text.trim();
-
     String email = emailController.text.trim();
     if (userName != '' && password != '' && email != '') {
       setState(() {
